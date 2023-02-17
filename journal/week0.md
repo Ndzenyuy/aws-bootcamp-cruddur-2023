@@ -14,5 +14,8 @@ sudo ./aws/install
 ```
 We obtain 
 
-![cli installation on Gitpod](aws-bootcamp-cruddur-2023/images/configuring_Gitpod.jpg)
+![cli installation on Gitpod](https://github.com/Ndzenyuy/aws-bootcamp-cruddur-2023/blob/main/images/configuring_gitpod.JPG)
+
+## Architectural(logical) diagram with lucid chart
+
 
