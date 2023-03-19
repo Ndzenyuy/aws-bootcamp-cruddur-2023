@@ -138,3 +138,7 @@ Then install postgres client into gitpod
 ## Testing the application with both frontend and backend running
 We right click on the docker-compose.yml, then select compose up, after unlocking the frontend and backend ports, we open the link to the frontend container and we get: 
 ![Running Cruddur App](https://github.com/Ndzenyuy/aws-bootcamp-cruddur-2023/blob/main/images/w1-running-the-app.png)
+
+## Pushing images to dockerhub
+After assuring that our images are bug free, we can push it to [dockerhub](https://hub.docker.com/) for access from another machine.
+![Images in dockerhub]()
