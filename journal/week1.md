@@ -136,4 +136,4 @@ Then install postgres client into gitpod
       sudo apt install -y postgresql-client-13 libpq-dev
 ```
 ## Testing the application with both frontend and backend running
-We right click on the [docker-compose.yml]
+We right click on the docker-compose.yml, then select compose up, after unlocking the frontend and backend ports, we open the link to the frontend container and we get: ![Running Cruddur App]()
