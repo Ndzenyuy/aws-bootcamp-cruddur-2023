@@ -1,7 +1,7 @@
 # Week 1 — App Containerization
 In this week, we containerized our applications in two images: frontend and backend. These two were built indipendently but communicate with each other.
 
-##Adding a backend docker file
+## Adding a backend docker file
 Under the backend-flask directory, we created a docker file with the following contents:
 ```
 FROM python:3.10-slim-buster
