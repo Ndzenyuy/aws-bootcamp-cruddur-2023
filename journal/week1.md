@@ -141,4 +141,4 @@ We right click on the docker-compose.yml, then select compose up, after unlockin
 
 ## Pushing images to dockerhub
 After assuring that our images are bug free, we can push it to [dockerhub](https://hub.docker.com/) for access from another machine.
-![Images in dockerhub]()
+![Images in dockerhub](https://github.com/Ndzenyuy/aws-bootcamp-cruddur-2023/blob/main/images/w1-images-in-dockerhub.png)
