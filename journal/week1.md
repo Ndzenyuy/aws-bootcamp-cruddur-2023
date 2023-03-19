@@ -135,3 +135,5 @@ Then install postgres client into gitpod
       sudo apt update
       sudo apt install -y postgresql-client-13 libpq-dev
 ```
+## Testing the application with both frontend and backend running
+We right click on the [docker-compose.yml]
