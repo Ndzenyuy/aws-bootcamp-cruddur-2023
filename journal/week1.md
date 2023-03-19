@@ -140,5 +140,10 @@ We right click on the docker-compose.yml, then select compose up, after unlockin
 ![Running Cruddur App](https://github.com/Ndzenyuy/aws-bootcamp-cruddur-2023/blob/main/images/w1-running-the-app.png)
 
 ## Pushing images to dockerhub
-After assuring that our images are bug free, we can push it to [dockerhub](https://hub.docker.com/) for access from another machine.
+After assuring that our images are bug free, we can push it to [dockerhub](https://hub.docker.com/) for access from another machine. 
+With the following command:
+```
+docker container commit CONTAINER_ID aws-bootcamp-cruddur-2023-frontend:latest
+docker container commit CONTAINER_ID aws-bootcamp-cruddur-2023-backend:latest
+```
 ![Images in dockerhub](https://github.com/Ndzenyuy/aws-bootcamp-cruddur-2023/blob/main/images/w1-images-in-dockerhub.png)
