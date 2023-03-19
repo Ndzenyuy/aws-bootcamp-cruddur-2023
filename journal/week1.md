@@ -24,3 +24,11 @@ In order to build a the docker image, we did
 ```
 docker build -t  backend-flask ./backend-flask
 ```
+## Running the docker image
+Before running the image, it is preliminary to set FRONTEND_URL and BACKEND_URL to "*" and run them in the background(optional)
+```
+export FRONTEND_URL="*"
+export BACKEND_URL="*"
+docker container run --rm -p 4567:4567 -d backend-flask
+```
+## Building the frontend image
