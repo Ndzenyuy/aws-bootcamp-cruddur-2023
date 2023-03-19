@@ -146,4 +146,6 @@ With the following command:
 docker container commit CONTAINER_ID aws-bootcamp-cruddur-2023-frontend:latest
 docker container commit CONTAINER_ID aws-bootcamp-cruddur-2023-backend:latest
 ```
+We obtain
+
 ![Images in dockerhub](https://github.com/Ndzenyuy/aws-bootcamp-cruddur-2023/blob/main/images/w1-images-in-dockerhub.png)
