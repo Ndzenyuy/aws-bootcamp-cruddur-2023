@@ -1,4 +1,4 @@
-FROM node:16.18 AS builder
+FROM node:16.19.1 AS builder
 
 ENV PORT=3000
 
