@@ -29,12 +29,24 @@ tracer = trace.get_tracer(__name__)
 ```
 ```
 # Initialize automatic instrumentation with Flask
+# these goes under the app = Flask(__name__)
+
 FlaskInstrumentor().instrument_app(app)
 RequestsInstrumentor().instrument()
 ```
 We add the following Environment variables to backend-flask in docker compose 
 ```
+OTEL_SERVICE_NAME: 'backend-flask'
 OTEL_EXPORTER_OTLP_ENDPOINT: "https://api.honeycomb.io"
 OTEL_EXPORTER_OTLP_HEADERS: "x-honeycomb-team=${HONEYCOMB_API_KEY}"
-OTEL_SERVICE_NAME: "${HONEYCOMB_SERVICE_NAME}"
 ```
+
+Then the api key is to be gotten from honeycomb and set in gitpod
+
+```
+export HONEYCOMB_API_KEY=""
+export HONEYCOMB_SERVICE_NAME="Cruddur"
+gp env HONEYCOMB_API_KEY=""
+gp env HONEYCOMB_SERVICE_NAME="Cruddur"
+```
+We launch the app by running docker compose up, then we watch (honeycomb)[honeycomb.io]
