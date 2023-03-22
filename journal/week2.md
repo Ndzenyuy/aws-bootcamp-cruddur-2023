@@ -50,4 +50,5 @@ gp env HONEYCOMB_API_KEY=""
 gp env HONEYCOMB_SERVICE_NAME="Cruddur"
 ```
 We launch the app by running docker compose up, then we watch [honeycomb](https://ui.honeycomb.io) for the sent metrics:
+![Distributed tracing captured in honeycomb](https://github.com/Ndzenyuy/aws-bootcamp-cruddur-2023/blob/main/images/w3%20monitoring.png)
 
