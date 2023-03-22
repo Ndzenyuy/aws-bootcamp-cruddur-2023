@@ -49,6 +49,24 @@ export HONEYCOMB_SERVICE_NAME="Cruddur"
 gp env HONEYCOMB_API_KEY=""
 gp env HONEYCOMB_SERVICE_NAME="Cruddur"
 ```
+# Capturing metrics for home activities
+We edit the home_activities.py file in order to configure data to be sent to honeycomb, first the name of the trace is set through
+```
+from opentelemetry import trace
+
+tracer = trace.get_tracer("home.activities")
+```
+Just below def_run(), we insert the code; 
+```
+with tracer.start_as_current_span("home-activities-mock-data"):
+```
+and just above the return, we insert
+```
+span.set_attribute("app.result_length", len(results))
+```
+These will sent home activities metrics to honeycomb, we can use heatmap and p90 to monitor the duration and the speed of each activity
+
 We launch the app by running docker compose up, then we watch [honeycomb](https://ui.honeycomb.io) for the sent metrics:
 ![Distributed tracing captured in honeycomb](https://github.com/Ndzenyuy/aws-bootcamp-cruddur-2023/blob/main/images/w3%20monitoring.png)
+
 
