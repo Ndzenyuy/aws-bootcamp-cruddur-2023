@@ -9,7 +9,7 @@ tasks:
       sudo ./aws/install
       cd $THEIA_WORKSPACE_ROOT
 
-  - name: frontend
+  - name: react-js
     command: |
       cd frontend-react-js
       npm i
