@@ -32,6 +32,20 @@ import rollbar
 import rollbar.contrib.flask
 from flask import got_request_exception
 
+#cloudwatch logs
+import watchtower
+import logging
+from time import strftime
+
+# Configuring Logger to Use CloudWatch
+LOGGER = logging.getLogger(__name__)
+LOGGER.setLevel(logging.DEBUG)
+console_handler = logging.StreamHandler()
+cw_handler = watchtower.CloudWatchLogHandler(log_group='cruddur')
+LOGGER.addHandler(console_handler)
+LOGGER.addHandler(cw_handler)
+LOGGER.info("test log")
+
 # HoneyComb ---------
 # Initialize tracing and an exporter that can send data to Honeycomb
 provider = TracerProvider()
@@ -90,6 +104,12 @@ cors = CORS(
   methods="OPTIONS,GET,HEAD,POST"
 )
 
+@app.after_request
+def after_request(response):
+    timestamp = strftime('[%Y-%b-%d %H:%M]')
+    LOGGER.error('%s %s %s %s %s %s', timestamp, request.remote_addr, request.method, request.scheme, request.full_path, response.status)
+    return response
+
 @app.route("/api/message_groups", methods=['GET'])
 def data_message_groups():
   user_handle  = 'andrewbrown'
@@ -130,10 +150,6 @@ def rollbar_test():
     rollbar.report_message('Hello World!', 'warning')
     return "Hello World!"
 
-@app.route("/api/activities/home", methods=['GET'])
-def data_home():
-  data = HomeActivities.run()
-  return data, 200
 
 @app.route("/api/activities/@<string:handle>", methods=['GET'])
 def data_handle(handle):
@@ -153,6 +169,11 @@ def data_search():
     return model['data'], 200
   return
 
+@app.route("/api/activities/home", methods=['GET'])
+def data_home():
+  data = HomeActivities.run(logger=LOGGER)
+  return data, 200
+  
 @app.route("/api/activities", methods=['POST','OPTIONS'])
 @cross_origin()
 def data_activities():
