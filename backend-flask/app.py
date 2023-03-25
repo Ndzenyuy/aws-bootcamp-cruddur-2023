@@ -23,8 +23,8 @@ from opentelemetry.sdk.trace.export import BatchSpanProcessor
 from opentelemetry.sdk.trace.export import ConsoleSpanExporter, SimpleSpanProcessor
 
 # X-RAY ----------
-from aws_xray_sdk.core import xray_recorder
-from aws_xray_sdk.ext.flask.middleware import XRayMiddleware
+#from aws_xray_sdk.core import xray_recorder
+#from aws_xray_sdk.ext.flask.middleware import XRayMiddleware
 
 # Rollbar
 import os
@@ -55,8 +55,8 @@ provider.add_span_processor(processor)
 
 
 # X-RAY ----------
-xray_url = os.getenv("AWS_XRAY_URL")
-xray_recorder.configure(service='backend-flask', dynamic_naming=xray_url)
+#xray_url = os.getenv("AWS_XRAY_URL")
+#xray_recorder.configure(service='backend-flask', dynamic_naming=xray_url)
 
 # Show this in the logs within the backend-flask app (STDOUT)
 simple_processor = SimpleSpanProcessor(ConsoleSpanExporter())
@@ -68,7 +68,7 @@ tracer = trace.get_tracer(__name__)
 app = Flask(__name__)
 
 # X-RAY ----------
-XRayMiddleware(app, xray_recorder)
+#XRayMiddleware(app, xray_recorder)
 
 # HoneyComb ---------
 # Initialize automatic instrumentation with Flask
@@ -104,11 +104,11 @@ cors = CORS(
   methods="OPTIONS,GET,HEAD,POST"
 )
 
-@app.after_request
-def after_request(response):
-    timestamp = strftime('[%Y-%b-%d %H:%M]')
-    LOGGER.error('%s %s %s %s %s %s', timestamp, request.remote_addr, request.method, request.scheme, request.full_path, response.status)
-    return response
+#@app.after_request
+#def after_request(response):
+#    timestamp = strftime('[%Y-%b-%d %H:%M]')
+#    LOGGER.error('%s %s %s %s %s %s', timestamp, request.remote_addr, request.method, request.scheme, request.full_path, response.status)
+#    return response
 
 @app.route("/api/message_groups", methods=['GET'])
 def data_message_groups():
