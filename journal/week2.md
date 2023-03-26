@@ -49,7 +49,7 @@ export HONEYCOMB_SERVICE_NAME="Cruddur"
 gp env HONEYCOMB_API_KEY=""
 gp env HONEYCOMB_SERVICE_NAME="Cruddur"
 ```
-# Capturing metrics for home activities
+### Capturing metrics for home activities
 We edit the home_activities.py file in order to configure data to be sent to honeycomb, first the name of the trace is set through
 ```
 from opentelemetry import trace
@@ -69,4 +69,83 @@ These will sent home activities metrics to honeycomb, we can use heatmap and p90
 We launch the app by running docker compose up, then we watch [honeycomb](https://ui.honeycomb.io) for the sent metrics:
 ![Distributed tracing captured in honeycomb](https://github.com/Ndzenyuy/aws-bootcamp-cruddur-2023/blob/main/images/w3%20monitoring.png)
 
+## Amazon x-ray
+Next we cequally onfigured XRAY to monitor metrics in the backend of the Cruddur, in the steps aheah, we'll see how xray was configured
+
+Add the following to requirements.txt file
+```
+aws-xray-sdk
+```
+Then install requirements for the xray dependencies to be installed
+```
+pip install -r requirements.txt
+```
+Next we add the following to app.py
+```
+from aws_xray_sdk.core import xray_recorder
+from aws_xray_sdk.ext.flask.middleware import XRayMiddleware
+
+xray_url = os.getenv("AWS_XRAY_URL")
+xray_recorder.configure(service='Cruddur', dynamic_naming=xray_url)
+XRayMiddleware(app, xray_recorder)
+```
+### Setting up AWS XRAY resources
+We create a new file under aws/json/xray.json and populate it with
+```
+{
+  "SamplingRule": {
+      "RuleName": "Cruddur",
+      "ResourceARN": "*",
+      "Priority": 9000,
+      "FixedRate": 0.1,
+      "ReservoirSize": 5,
+      "ServiceName": "Cruddur",
+      "ServiceType": "*",
+      "Host": "*",
+      "HTTPMethod": "*",
+      "URLPath": "*",
+      "Version": 1
+  }
+}
+```
+on the cli, we run the following 
+```
+FLASK_ADDRESS="https://4567-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}"
+aws xray create-group \
+   --group-name "Cruddur" \
+   --filter-expression "service(\"$FLASK_ADDRESS\") {fault OR error}"
+``` 
+
+```
+aws xray create-sampling-rule --cli-input-json file://aws/json/xray.json
+```
+### We add the deamon service to docker-compose.yml
+```
+  xray-daemon:
+    image: "amazon/aws-xray-daemon"
+    environment:
+      AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID}"
+      AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY}"
+      AWS_REGION: "us-east-1"
+    command:
+      - "xray -o -b xray-daemon:2000"
+    ports:
+      - 2000:2000/udp
+```
+We also need to add two environment variables to docker-compose file
+```
+      AWS_XRAY_URL: "*4567-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}*"
+      AWS_XRAY_DAEMON_ADDRESS: "xray-daemon:2000"
+```
+and finaly we did Cloudwatch logs
+
+## Cloudwatch logs
+We add the following to requirements.txt
+```
+watchtower
+```
+On the cli, we run
+```
+pip install -r requirements.txt
+```
 
