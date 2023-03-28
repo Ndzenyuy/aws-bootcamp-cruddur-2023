@@ -182,4 +182,4 @@ In docker compose, under backend-flask in docker-compose.yml file, we set the en
       AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY}"
 ```      
 We get: 
-![CLoud watch logs settup]()
+![CLoud watch logs settup](https://github.com/Ndzenyuy/aws-bootcamp-cruddur-2023/blob/main/images/w2-seeting%20cloudwatch%20logs.png)
