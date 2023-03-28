@@ -138,8 +138,9 @@ We also need to add two environment variables to docker-compose file
       AWS_XRAY_DAEMON_ADDRESS: "xray-daemon:2000"
 ```
 
-![xray up and running]()
-and finaly we did Cloudwatch logs
+![xray up and running](https://github.com/Ndzenyuy/aws-bootcamp-cruddur-2023/blob/main/images/implementing%20xray.png)
+
+and finaly 
 
 ## Cloudwatch logs
 We add the following to requirements.txt
@@ -150,4 +151,35 @@ On the cli, we run
 ```
 pip install -r requirements.txt
 ```
+in the app.py file, we add
+```
+import watchtower
+import logging
+from time import strftime
+```
+```
+# Configuring Logger to Use CloudWatch
+LOGGER = logging.getLogger(__name__)
+LOGGER.setLevel(logging.DEBUG)
+console_handler = logging.StreamHandler()
+cw_handler = watchtower.CloudWatchLogHandler(log_group='cruddur')
+LOGGER.addHandler(console_handler)
+LOGGER.addHandler(cw_handler)
+LOGGER.info("test log")
+```
+```
+@app.after_request
+def after_request(response):
+    timestamp = strftime('[%Y-%b-%d %H:%M]')
+    LOGGER.error('%s %s %s %s %s %s', timestamp, request.remote_addr, request.method, request.scheme, request.full_path, response.status)
+    return response
+```
 
+In docker compose, under backend-flask in docker-compose.yml file, we set the environement variables
+```
+      AWS_DEFAULT_REGION: "${AWS_DEFAULT_REGION}"
+      AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID}"
+      AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY}"
+```      
+We get: 
+![CLoud watch logs settup]()
