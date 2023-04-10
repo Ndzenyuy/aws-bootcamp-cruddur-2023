@@ -29,7 +29,7 @@ Amplify.configure({
 ## Conditionnaly show components based on logge in or logged out
 We insert the following code in HomeFeedPage.js
 
-```
+```js
   const checkAuth = async () => {
     Auth.currentAuthenticatedUser({
       // Optional, By default is false. 
@@ -59,7 +59,7 @@ We insert the following code in HomeFeedPage.js
   }, [])
   ```
   ## Signin Page 
-  ```
+  ```js
   import { Auth } from 'aws-amplify';
 
   const [cognitoErrors, setCognitoErrors] = React.useState('');
@@ -95,7 +95,7 @@ We insert the following code in HomeFeedPage.js
     }
 ```
 ## Signup Page
-```
+```js
 import { Auth } from 'aws-amplify';
 
 const [cognitoErrors, setCognitoErrors] = React.useState('');
@@ -138,7 +138,7 @@ if (cognitoErrors){
 {errors}
 ```
 ## Confirmation Page
-```
+```js
 const resend_code = async (event) => {
     setErrors('')
     try {
@@ -177,7 +177,7 @@ const resend_code = async (event) => {
 ```
 
 ## Recovery Page
-```
+```js
 import { Auth } from 'aws-amplify';
 
 const onsubmit_send_code = async (event) => {
@@ -203,7 +203,7 @@ const onsubmit_send_code = async (event) => {
   
 ```
 Modifications in the App.py file
-```
+```js
 cors = CORS(
   app, 
   resources={r"/api/*": {"origins": origins}},
