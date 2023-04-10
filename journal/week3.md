@@ -5,7 +5,7 @@ We start by creating a user pool in AWS, using cognito, a service that manages a
 ## Configure APlify
 We have to include cognito user pool in to our code in App.js
 
-```
+```js
 import { Amplify } from 'aws-amplify';
 
 import { Amplify } from 'aws-amplify';
