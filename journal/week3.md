@@ -2,7 +2,7 @@
 ## Provision cognito user pool
 We start by creating a user pool in AWS, using cognito, a service that manages and stores the credentials used for signing in by users of Cruddur
 
-## Configure APlify
+## Configure Amplify
 We have to include cognito user pool in to our code in App.js
 
 ```js
