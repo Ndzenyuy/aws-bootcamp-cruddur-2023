@@ -2,6 +2,7 @@ from flask import Flask
 from flask import request
 from flask_cors import CORS, cross_origin
 import os
+import sys
 
 from services.home_activities import *
 from services.user_activities import *
@@ -13,6 +14,8 @@ from services.messages import *
 from services.create_message import *
 from services.show_activity import *
 
+from lib.cognito_token_verification import CognitoTokenVerification
+
 # HoneyComb ---------
 from opentelemetry import trace
 from opentelemetry.instrumentation.flask import FlaskInstrumentor
@@ -21,6 +24,7 @@ from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExport
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor
 from opentelemetry.sdk.trace.export import ConsoleSpanExporter, SimpleSpanProcessor
+
 
 # X-RAY ----------
 from aws_xray_sdk.core import xray_recorder
@@ -66,6 +70,17 @@ trace.set_tracer_provider(provider)
 tracer = trace.get_tracer(__name__)
 
 app = Flask(__name__)
+
+cognito_token_verification = CognitoTokenVerification(
+  user_pool_id=os.getenv("AWS_COGNITO_USER_POOL_ID")
+  user_pool_client_id= os.getenv("AWS_COGNITO_USER_POOL_CLIENT_ID")
+  region= 
+)
+
+app.config['AWS_COGNITO_USER_POOL_ID'] = os.getenv("AWS_COGNITO_USER_POOL_ID")
+app.config['AWS_COGNITO_USER_POOL_CLIENT_ID'] = os.getenv("AWS_COGNITO_USER_POOL_CLIENT_ID")
+
+aws_auth = AWSCognitoAuthentication(app)
 
 # X-RAY ----------
 XRayMiddleware(app, xray_recorder)
